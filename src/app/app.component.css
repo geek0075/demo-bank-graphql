@@ -1,0 +1,17 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: coral;
+    height: 100%;
+}
+
+.topnav {
+    flex: 0 0 auto;
+    background-color: darkorchid;
+}
+
+.content {
+    flex: 1 0 auto;
+    /*flex-grow: 1;*/
+    background-color: cornflowerblue;
+}

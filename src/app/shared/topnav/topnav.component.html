@@ -1,0 +1,37 @@
+<main>
+    <header class="p-3 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <img src="assets/brand/logo-30x30.png" alt="" width="32" height="32">&nbsp;&nbsp;
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li class="nav-item"><a routerLink="/" routerLinkActive="active" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li class="nav-item"><a routerLink="/dashboard" routerLinkActive="active" class="nav-link px-2 text-white">Dashboard</a></li>
+                </ul>
+
+                <div class="text-end" *ngIf="!user">
+                    <button *ngIf="isRegister" (click)="gotoLogin()" type="button" class="btn btn-outline-light me-2">Login</button>
+                    <button *ngIf="isLogin" (click)="gotoRegister()" type="button" class="btn btn-warning">Sign-up</button>
+                </div>
+
+                <div class="dropdown text-end" *ngIf="user">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="myDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="assets/brand/kay-taiwo.JPG" alt="elvis" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="myDropdownMenuLink">
+                        <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Deposit</a></li>
+                        <li><a class="dropdown-item" href="#">Withdraw</a></li>
+                        <li><a class="dropdown-item" href="#">Balance</a></li>
+                        <li><a class="dropdown-item" href="#">Transactions</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a style="cursor:pointer;" class="dropdown-item" (click)="logout()">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+</main>
