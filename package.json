@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node ./server/bin/www",
-    "build": "ng build",
+    "build": "ng build --aot --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -46,5 +46,6 @@
   },
   "engines": {
     "node": "14.x"
-  }
+  },
+  "heroku-run-build-script": true
 }
