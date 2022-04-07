@@ -61,37 +61,9 @@ export class BankService {
         });
     }
 
-    // getAccount(): Observable<Account> {
-    //     return new Observable<Account>((observer: Observer<Account>) => {
-    //         this.http.get<any>(encodeURI(this.accountsBaseUrl)).pipe(
-    //             retry(3),
-    //             catchError(this.handleError)
-    //         ).subscribe({
-    //             next: (data: any) => {
-    //                 console.log(`BankService.getAccount: data => ${JSON.stringify(data)}`);
-    //                 const account: Account = Account.fromObject(data);
-    //                 console.log(`BankService.getAccount: account => ${JSON.stringify(account)}`);
-    //                 observer.next(account);
-    //                 observer.complete();
-    //             },
-    //             error: (error: any) => {
-    //                 console.error(`BankService.getAccount: error => ${JSON.stringify(error)}`);
-    //                 observer.error(error);
-    //             }
-    //         })
-    //     });
-    // }
-
     getAccount(): Observable<Account> {
         return new Observable<Account>((observer: Observer<Account>) => {
-            const tokenVal = this.token.getToken();
-            console.log(`BankService.getAccount: tokenVal => ${tokenVal}`);
-            const httpOptions = {
-                headers: new HttpHeaders({
-                    'Authorization': 'Bearer ' + tokenVal
-                })
-            };
-            this.http.get<any>(encodeURI(this.accountsBaseUrl), httpOptions).pipe(
+            this.http.get<any>(encodeURI(this.accountsBaseUrl)).pipe(
                 retry(3),
                 catchError(this.handleError)
             ).subscribe({

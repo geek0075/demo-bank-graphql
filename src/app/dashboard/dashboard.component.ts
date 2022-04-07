@@ -32,13 +32,11 @@ export class DashboardComponent implements OnInit {
         this.depositForm = new FormGroup({
             depositAmount: new FormControl('', {
                 validators: [Validators.required, Validators.min(1), Validators.max(50000)],
-                updateOn: 'blur'
             }),
         });
         this.withdrawForm = new FormGroup({
             withdrawAmount: new FormControl('', {
                 validators: [Validators.required, Validators.min(1), Validators.max(50000)],
-                updateOn: 'blur'
             }),
         });
     }
@@ -127,6 +125,7 @@ export class DashboardComponent implements OnInit {
         .subscribe({
             next: (account: Account) => {
                 this.balance = account.balance;
+                this.depositAmount?.reset('');
                 this.getTransactions();
             },
             error: (error: any) => {
@@ -163,6 +162,7 @@ export class DashboardComponent implements OnInit {
         .subscribe({
             next: (account: Account) => {
                 this.balance = account.balance;
+                this.withdrawAmount?.reset('');
                 this.getTransactions();
             },
             error: (error: any) => {
