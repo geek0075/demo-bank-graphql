@@ -1,6 +1,134 @@
-<div class="body text-center">
-    <main class="content">
-        <h1>This is your Dashboard</h1>
-        <p>This is the dashboard page for the banking application. This is here you will check your balance, make deposits and withdrawals, and view transctions!</p>
+<div class="container">
+    <main>
+        <div class="pt-2 text-center">
+            <h2>Bank Dashboard</h2>
+            <p class="lead">This is the dashboard page for the banking application. This is here you will check your balance, make deposits and withdrawals, and view transctions!</p>
+        </div>
+        <div class="pt-2 text-center" *ngIf="!balanceLoading else balanceLoadingIndicator">
+            <h1 class="display-1 fw-normal">{{ balance | number:'2.2-2' }}</h1>
+        </div>
+        <ng-template #balanceLoadingIndicator>
+            <div class="pt-2 text-center">
+                <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </ng-template>
+        <div class="pt-2">
+            <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="deposit-tab" data-bs-toggle="tab" data-bs-target="#deposit" type="button" role="tab" aria-controls="deposit" aria-selected="true">Deposit</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="withdraw-tab" data-bs-toggle="tab" data-bs-target="#withdraw" type="button" role="tab" aria-controls="withdraw" aria-selected="false">Withdraw</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="deposit" role="tabpanel" aria-labelledby="deposit-tab">
+                    <form [formGroup]="depositForm" (ngSubmit)="onSubmitDeposit()" class="row g-3 mt-3">
+                        <div class="col-11">
+                            <label for="inputDeposit" class="visually-hidden">Deposit</label>
+                            <input id="inputDeposit" type="number" class="form-control" formControlName="depositAmount" placeholder="Deposit" required min="1" max="50000">
+                            <div *ngIf="depositAmount?.invalid && (depositAmount?.dirty || depositAmount?.touched)" class="ng-alert ng-alert-danger">
+                                <div *ngIf="depositAmount?.errors?.['required']">
+                                    Deposit amount is required.
+                                </div>
+                                <div *ngIf="depositAmount?.errors?.['min']">
+                                    Deposit amount must be greater than 0.
+                                </div>
+                                <div *ngIf="depositAmount?.errors?.['max']">
+                                    Deposit amount must be less than 50000.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <button [disabled]="isDepositing||isWithdrawing||!depositForm.valid" type="submit" class="btn btn-primary mb-3">
+                                <span *ngIf="isDepositing" class="spinner-border spinner-border-sm mr-1"></span>
+                                Deposit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="withdraw" role="tabpanel" aria-labelledby="withdraw-tab">
+                    <form [formGroup]="withdrawForm" (ngSubmit)="onSubmitWithdraw()" class="row g-3 mt-3">
+                        <div class="col-11">
+                            <label for="inputWithdraw" class="visually-hidden">Withdraw</label>
+                            <input id="inputWithdraw" type="number" class="form-control" formControlName="withdrawAmount" placeholder="Withdraw" required min="1" max="50000">
+                            <div *ngIf="withdrawAmount?.invalid && (withdrawAmount?.dirty || withdrawAmount?.touched)" class="ng-alert ng-alert-danger">
+                                <div *ngIf="withdrawAmount?.errors?.['required']">
+                                    Withdraw amount is required.
+                                </div>
+                                <div *ngIf="withdrawAmount?.errors?.['min']">
+                                    Withdraw amount must be greater than 0.
+                                </div>
+                                <div *ngIf="withdrawAmount?.errors?.['max']">
+                                    Withdraw amount must be less than 50000.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <button [disabled]="isDepositing||isWithdrawing||!withdrawForm.valid" type="submit" class="btn btn-primary mb-3">
+                                <span *ngIf="isWithdrawing" class="spinner-border spinner-border-sm mr-1"></span>
+                                Withdraw
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <h2 class="display-6 text-center mb-4">Transactions</h2>
+        <div class="table-responsive">
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th style="width: 34%;"></th>
+                <th style="width: 22%;">Free</th>
+                <th style="width: 22%;">Pro</th>
+                <th style="width: 22%;">Enterprise</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row" class="text-start">Public</th>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-start">Private</th>
+                <td></td>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+              </tr>
+            </tbody>
+    
+            <tbody>
+              <tr>
+                <th scope="row" class="text-start">Permissions</th>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-start">Sharing</th>
+                <td></td>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-start">Unlimited members</th>
+                <td></td>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-start">Extra security</th>
+                <td></td>
+                <td></td>
+                <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
     </main>
 </div>
