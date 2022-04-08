@@ -26,7 +26,7 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="deposit" role="tabpanel" aria-labelledby="deposit-tab">
                     <form [formGroup]="depositForm" (ngSubmit)="onSubmitDeposit()" class="row g-3 mt-3">
-                        <div class="col-11">
+                        <div class="col-10">
                             <label for="inputDeposit" class="visually-hidden">Deposit</label>
                             <input id="inputDeposit" type="number" class="form-control" formControlName="depositAmount" placeholder="Deposit" required min="1" max="50000">
                             <div *ngIf="depositAmount?.invalid && (depositAmount?.dirty || depositAmount?.touched)" class="ng-alert ng-alert-danger">
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-1">
+                        <div class="col-2">
                             <button [disabled]="isDepositing||isWithdrawing||!depositForm.valid" type="submit" class="btn btn-primary mb-3">
                                 <span *ngIf="isDepositing" class="spinner-border spinner-border-sm mr-1"></span>
                                 Deposit
@@ -51,7 +51,7 @@
                 </div>
                 <div class="tab-pane fade" id="withdraw" role="tabpanel" aria-labelledby="withdraw-tab">
                     <form [formGroup]="withdrawForm" (ngSubmit)="onSubmitWithdraw()" class="row g-3 mt-3">
-                        <div class="col-11">
+                        <div class="col-10">
                             <label for="inputWithdraw" class="visually-hidden">Withdraw</label>
                             <input id="inputWithdraw" type="number" class="form-control" formControlName="withdrawAmount" placeholder="Withdraw" required min="1" max="50000">
                             <div *ngIf="withdrawAmount?.invalid && (withdrawAmount?.dirty || withdrawAmount?.touched)" class="ng-alert ng-alert-danger">
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-1">
+                        <div class="col-2">
                             <button [disabled]="isDepositing||isWithdrawing||!withdrawForm.valid" type="submit" class="btn btn-primary mb-3">
                                 <span *ngIf="isWithdrawing" class="spinner-border spinner-border-sm mr-1"></span>
                                 Withdraw
