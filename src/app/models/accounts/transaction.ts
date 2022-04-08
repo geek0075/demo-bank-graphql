@@ -4,19 +4,22 @@ export class Transaction {
     type: string;
     date: Date;
     amount: number;
+    balance: number;
    
     constructor(options: {
         id?: string, 
         accountNo?: string, 
         type?: string, 
         date?: Date,
-        amount?: number, 
+        amount?: number,
+        balance?: number,
     }={}) {
         this._id = options.id || '';
         this.accountNo = options.accountNo || '';
         this.type = options.type || '';
         this.date = options.date || new Date();
         this.amount = options.amount || 0;
+        this.balance = options.balance || 0;
     }
 
     static fromObject(obj: any): Transaction {
@@ -25,7 +28,8 @@ export class Transaction {
             accountNo: obj.accountNo, 
             type: obj.type, 
             date: obj.date, 
-            amount: obj.amount
+            amount: obj.amount,
+            balance: obj.balance,
         });
     }
 

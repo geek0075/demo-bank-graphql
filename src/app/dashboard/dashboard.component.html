@@ -82,8 +82,9 @@
                 <thead>
                     <tr>
                         <th style="width: 34%;">Date</th>
-                        <th style="width: 33%;">Type</th>
-                        <th style="width: 33%;">Amount</th>
+                        <th style="width: 22%;">Type</th>
+                        <th style="width: 22%;">Amount</th>
+                        <th style="width: 22%;">Balance</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,6 +97,9 @@
                         </td>
                         <td>
                             {{ t.amount | number:'2.2-2' }}
+                        </td>
+                        <td>
+                            {{ t.balance | number:'2.2-2' }}
                         </td>
                     </tr>
                 </tbody>
