@@ -18,6 +18,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
             provide: APOLLO_FLAGS,
             useValue: {
                 useMutationLoading: true,
+                useInitialLoading: true,
             },
         },
         {

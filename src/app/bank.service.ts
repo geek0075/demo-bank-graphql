@@ -24,7 +24,6 @@ const GET_ACCOUNT = gql`
     }
 `;
 
-// depositAccount(transactAccountInput: TransactAccountInput!): Account!
 const DEPOSIT_ACCOUNT = gql`
     mutation DepositAccount($transactAccountInput: TransactAccountInput!) {
         depositAccount(transactAccountInput: $transactAccountInput) {
@@ -41,7 +40,6 @@ const DEPOSIT_ACCOUNT = gql`
     }
 `;
 
-// withdrawAccount(transactAccountInput: TransactAccountInput!): Account!
 const WITHDRAW_ACCOUNT = gql`
     mutation WithdrawAccount($transactAccountInput: TransactAccountInput!) {
         withdrawAccount(transactAccountInput: $transactAccountInput) {
@@ -103,13 +101,6 @@ export class BankService {
                 }
             }).subscribe({
                 next: (result: any) => {
-                    console.error(`BankService.withdraw: result => ${JSON.stringify(result)}`);
-                    if (!result.loading && result?.data && result?.data?.withdrawAccount) {
-                        const account: Account = Account.fromObject(result?.data?.withdrawAccount);
-                        console.error(`BankService.withdraw: account => ${JSON.stringify(account)}`);
-                        const transactions: Transaction[] = result?.data?.withdrawAccount?.transactions.map((value: any) => Transaction.fromObject(value));
-                        console.error(`BankService.withdraw: transactions => ${JSON.stringify(transactions)}`);
-                    }
                     observer.next(result);
                 },
                 error: (error: any) => {

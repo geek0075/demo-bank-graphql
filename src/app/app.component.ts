@@ -14,7 +14,7 @@ import { SnackbarService } from './shared/snackbar.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-    title = 'VM-Bank';
+    title = 'Veegil Bank GraphQL';
 
     private userSubscription: Subscription | undefined;
     public user: User|null = null;
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
-        this.snackBarService.open('vm-bank loaded successfully!');
+        this.snackBarService.open(`${this.title} loaded successfully!`);
         // update this.user after login/register/logout
         this.userSubscription = this.authService.userSource$.subscribe((user: User|null) => {
             this.user = user;
