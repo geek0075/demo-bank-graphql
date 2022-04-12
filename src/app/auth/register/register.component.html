@@ -41,8 +41,8 @@
                         </div>
                     </div>
                     <div class="mb-3 text-center">
-                        <button [disabled]="isSaving||!registerForm.valid" type="submit" class="btn btn-primary">
-                            <span *ngIf="isSaving" class="spinner-border spinner-border-sm mr-1"></span>
+                        <button [disabled]="loading||!registerForm.valid" type="submit" class="btn btn-primary">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                             Register
                         </button>
                     </div>

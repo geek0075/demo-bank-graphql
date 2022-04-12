@@ -12,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 import { httpInterceptorProviders } from './http-interceptors';
+import { GraphQLModule } from './graphql.module';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { httpInterceptorProviders } from './http-interceptors';
         SharedModule,
         AuthModule,
         AppRoutingModule,
+        GraphQLModule,
     ],
     providers: [httpInterceptorProviders],
     bootstrap: [AppComponent]

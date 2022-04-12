@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/models/users/user';
 import { SnackbarService } from 'src/app/shared/snackbar.service';
-import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-login',
@@ -19,9 +18,7 @@ export class LoginComponent implements OnInit {
 
     loginForm: FormGroup;
 
-    hide: boolean = true;
-
-    isSaving: boolean = false;
+    loading: boolean = false;
 
     constructor(
         public authService: AuthService,
@@ -44,40 +41,21 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
-        this.isSaving = true;
-        this.authService.login(this.phone?.value, this.password?.value).pipe(finalize(() => this.isSaving = false))
+        this.authService.login(this.phone?.value, this.password?.value)
         .subscribe({
-            next: (user: User) => {
+            next: (result: any) => {
+                this.loading = result.loading;
+            },
+            error: (error: any) => {
+                console.error(`LoginComponent.onSubmit: error => ${JSON.stringify(error)}`);
+                this.snackbarService.open(error.message);
+            },
+            complete: () => {
                 if (this.authService.isLoggedIn) {
                     this.snackbarService.open(`Login succeeded!`);
                     let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/home';
                     this.router.navigate([redirect]);
                 }
-            },
-            error: (error: any) => {
-                console.error(`LoginComponent.onSubmit: error => ${JSON.stringify(error)}`);
-                let msg: string = "Something went wrong; please try again later.";
-                if (error.error instanceof ErrorEvent) {
-                    // A client-side or network error occurred. Handle it accordingly.
-                    msg = error.error.message;
-                } else {
-                    // The backend returned an unsuccessful response code.
-                    // The response body may contain clues as to what went wrong.
-                    if (error.status === 0) {
-                        msg = `Internet connection not found!`;
-                    } else if (error.status === 400) {
-                        msg = error.error.error.message;
-                    } else if (error.status === 404) {
-                        msg = error.error.error.message;
-                    } else {
-                        msg = `${error.status}:${error.statusText}`;
-                        if (error.error.error) {
-                            msg = `${msg} => ${error.error.error.code}:${error.error.error.message}`;
-                        }
-                    }
-                }
-                console.error(`LoginComponent.onSubmit: msg => ${msg}`);
-                this.snackbarService.open(msg);
             }
         });
     }

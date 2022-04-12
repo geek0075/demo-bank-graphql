@@ -7,12 +7,35 @@ import { map, catchError, retry } from 'rxjs/operators';
 import { User } from '../models/users/user';
 import { TokenService } from './token.service';
 
+import { Apollo, gql } from 'apollo-angular';
+
+const LOGIN_USER = gql`
+    mutation LoginUser($loginUserInput: LoginUserInput!) {
+        loginUser(loginUserInput: $loginUserInput) {
+            access_token
+        }
+    }
+`;
+
+const REGISTER_USER = gql`
+    mutation registerUser($createUserInput: CreateUserInput!) {
+        registerUser(createUserInput: $createUserInput) {
+            _id
+            fullName
+            phone
+            account {
+                accountNo
+                balance
+            }
+        }
+    }
+`;
+
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
-    private baseUrl = 'https://vm-bank-api.herokuapp.com/auth';
     userSource$ = new Subject<User | null>();
     user: User | null = null;
     isLoggedIn = false;
@@ -21,61 +44,62 @@ export class AuthService {
 
     constructor(
         private http: HttpClient,
-        private token: TokenService
+        private token: TokenService,
+        private apollo: Apollo,
     ) { }
 
     register(fullName : string, phone : string, password : string) : Observable <any> {
-        const payload = {
-            fullName,
-            phone,
-            password
-        };
         return new Observable<any>((observer: Observer<any>) => {
-            this.http.post<any>(`${this.baseUrl}/register`, payload).pipe(
-                retry(3), // retry a failed request up to 3 times
-                catchError(this.handleError) // then handle the error
-            ).subscribe({
-                next: (data: any) => {
-                    console.log(`AuthService.register: data => ${JSON.stringify(data)}`); // *take out after beta!
-                    //const user: User = User.fromObject(data);
-                    //console.log(`AuthService.register: user => ${JSON.stringify(user)}`); // *take out after beta!
-                    //this.isLoggedIn = true;
-                    //this.setUser(user);
-                    //this.token.saveToken(user.token);
-                    observer.next(data);
-                    observer.complete();
+            this.apollo.mutate({
+                mutation: REGISTER_USER,
+                variables: {
+                    createUserInput: {
+                        fullName: fullName,
+                        phone: phone,
+                        password: password
+                    }
+                }
+            }).subscribe({
+                next: (result: any) => {
+                    observer.next(result);
                 },
                 error: (error: any) => {
-                    console.error(`AuthService.register: error => ${JSON.stringify(error)}`); // *take out after beta!
+                    console.error(`AuthService.register: error => ${JSON.stringify(error)}`);
                     observer.error(error);
+                },
+                complete: () => {
+                    observer.complete();
                 }
             })
         });
     }
 
     login(phone : string, password : string) : Observable <User> {
-        const payload = {
-            phone,
-            password
-        };
         return new Observable<User>((observer: Observer<User>) => {
-            this.http.post<any>(`${this.baseUrl}/login`, payload).pipe(
-                retry(3), // retry a failed request up to 3 times
-                catchError(this.handleError) // then handle the error
-            ).subscribe({
-                next: (data: any) => {
-                    console.log(`AuthService.login: data => ${JSON.stringify(data)}`); // *take out after beta!
-                    const user: User = User.fromObject(data);
-                    console.log(`AuthService.login: user => ${JSON.stringify(user)}`); // *take out after beta!
-                    this.isLoggedIn = true;
-                    this.setUser(user);
-                    this.token.saveToken(user.token);
-                    observer.next(user);
-                    observer.complete();
+            this.apollo.mutate({
+                mutation: LOGIN_USER,
+                variables: {
+                    loginUserInput: {
+                        phone: phone,
+                        password: password
+                    }
+                }
+            }).subscribe({
+                next: (result: any) => {
+                    if (!result.loading && result?.data && result?.data?.loginUser && result?.data?.loginUser?.access_token) {
+                        const user: User = User.fromObject(result?.data?.loginUser);
+                        this.isLoggedIn = true;
+                        this.setUser(user);
+                        this.token.saveToken(user.token);
+                    }
+                    observer.next(result);
                 },
                 error: (error: any) => {
-                    console.error(`AuthService.login: error => ${JSON.stringify(error)}`); // *take out after beta!
+                    console.error(`AuthService.login: error => ${JSON.stringify(error)}`);
                     observer.error(error);
+                },
+                complete: () => {
+                    observer.complete();
                 }
             })
         });
