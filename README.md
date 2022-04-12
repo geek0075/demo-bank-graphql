@@ -1,6 +1,6 @@
 ## Kayode Taiwo
 
-Fictitious Banking Application. This application was generated with the Angular CLI and is an Angular (www.angular.io) application that has been deployed to the following url on Heroku:
+Fictitious Banking Application with Angular and GraphQL. This application was generated with the Angular CLI and is an Angular (www.angular.io) and GraphQL application that has been deployed to the following url on Heroku:
 
 https://vbg-gql.herokuapp.com/
 
