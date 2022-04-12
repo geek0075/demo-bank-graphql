@@ -17,7 +17,6 @@ export class DashboardComponent implements OnInit {
     balanceLoading: boolean = false;
 
     transactions: Transaction[] = [];
-    transactionsLoading: boolean = false;
 
     depositForm: FormGroup;
     withdrawForm: FormGroup;
@@ -46,150 +45,115 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit(): void {
         this.getAccount();
-        this.getTransactions();
     }
 
     getAccount() {
-        this.balanceLoading = true;
-        this.bankService.getAccount().pipe(finalize(() => this.balanceLoading = false))
+        this.bankService.getAccount()
         .subscribe({
-            next: (account: Account) => {
-                this.balance = account.balance;
+            next: (result: any) => {
+                this.balanceLoading = result.loading;
             },
             error: (error: any) => {
-                console.error(`DashboardComponent.getAccount: error => ${JSON.stringify(error)}`);
-                let msg: string = "Something went wrong; please try again later.";
-                if (error.error instanceof ErrorEvent) {
-                    // A client-side or network error occurred. Handle it accordingly.
-                    msg = error.error.message;
-                } else {
-                    // The backend returned an unsuccessful response code.
-                    // The response body may contain clues as to what went wrong.
-                    if (error.status === 0) {
-                        msg = `Internet connection not found!`;
-                    } else if (error.status === 400) {
-                        msg = error.error.error.message;
-                    } else if (error.status === 404) {
-                        msg = error.error.error.message;
-                    } else {
-                        msg = `${error.status}:${error.statusText}`;
-                        if (error.error.error) {
-                            msg = `${msg} => ${error.error.error.code}:${error.error.error.message}`;
-                        }
-                    }
-                }
-                console.error(`DashboardComponent.getAccount: msg => ${msg}`);
-                this.snackbarService.open(msg);
+                console.error(`DashboardComponent.onSubmit: error => ${JSON.stringify(error)}`);
+                this.snackbarService.open(error.message);
+            },
+            complete: () => {
             }
         });
+
+        // this.balanceLoading = true;
+        // this.bankService.getAccount().pipe(finalize(() => this.balanceLoading = false))
+        // .subscribe({
+        //     next: (account: Account) => {
+        //         this.balance = account.balance;
+        //     },
+        // });
     }
 
-    getTransactions() {
-        this.transactionsLoading = true;
-        this.bankService.getTransactions().pipe(finalize(() => this.transactionsLoading = false))
-        .subscribe({
-            next: (transactions: Transaction[]) => {
-                this.transactions = transactions;
-            },
-            error: (error: any) => {
-                console.error(`DashboardComponent.getTransactions: error => ${JSON.stringify(error)}`);
-                let msg: string = "Something went wrong; please try again later.";
-                if (error.error instanceof ErrorEvent) {
-                    // A client-side or network error occurred. Handle it accordingly.
-                    msg = error.error.message;
-                } else {
-                    // The backend returned an unsuccessful response code.
-                    // The response body may contain clues as to what went wrong.
-                    if (error.status === 0) {
-                        msg = `Internet connection not found!`;
-                    } else if (error.status === 400) {
-                        msg = error.error.error.message;
-                    } else if (error.status === 404) {
-                        msg = error.error.error.message;
-                    } else {
-                        msg = `${error.status}:${error.statusText}`;
-                        if (error.error.error) {
-                            msg = `${msg} => ${error.error.error.code}:${error.error.error.message}`;
-                        }
-                    }
-                }
-                console.error(`DashboardComponent.getTransactions: msg => ${msg}`);
-                this.snackbarService.open(msg);
-            }
-        });
-    }
+    // getTransactions() {
+    //     this.transactionsLoading = true;
+    //     this.bankService.getTransactions().pipe(finalize(() => this.transactionsLoading = false))
+    //     .subscribe({
+    //         next: (transactions: Transaction[]) => {
+    //             this.transactions = transactions;
+    //         },
+    //         error: (error: any) => {
+    //             console.error(`DashboardComponent.getTransactions: error => ${JSON.stringify(error)}`);
+    //             let msg: string = "Something went wrong; please try again later.";
+    //             if (error.error instanceof ErrorEvent) {
+    //                 // A client-side or network error occurred. Handle it accordingly.
+    //                 msg = error.error.message;
+    //             } else {
+    //                 // The backend returned an unsuccessful response code.
+    //                 // The response body may contain clues as to what went wrong.
+    //                 if (error.status === 0) {
+    //                     msg = `Internet connection not found!`;
+    //                 } else if (error.status === 400) {
+    //                     msg = error.error.error.message;
+    //                 } else if (error.status === 404) {
+    //                     msg = error.error.error.message;
+    //                 } else {
+    //                     msg = `${error.status}:${error.statusText}`;
+    //                     if (error.error.error) {
+    //                         msg = `${msg} => ${error.error.error.code}:${error.error.error.message}`;
+    //                     }
+    //                 }
+    //             }
+    //             console.error(`DashboardComponent.getTransactions: msg => ${msg}`);
+    //             this.snackbarService.open(msg);
+    //         }
+    //     });
+    // }
 
     onSubmitDeposit() {
-        this.isDepositing = true;
-        this.bankService.deposit(this.depositAmount?.value).pipe(finalize(() => this.isDepositing = false))
+        this.bankService.deposit(this.depositAmount?.value)
         .subscribe({
-            next: (account: Account) => {
-                this.balance = account.balance;
-                this.depositAmount?.reset('');
-                this.getTransactions();
+            next: (result: any) => {
+                this.isDepositing = result.loading;
             },
             error: (error: any) => {
                 console.error(`DashboardComponent.onSubmitDeposit: error => ${JSON.stringify(error)}`);
-                let msg: string = "Something went wrong; please try again later.";
-                if (error.error instanceof ErrorEvent) {
-                    // A client-side or network error occurred. Handle it accordingly.
-                    msg = error.error.message;
-                } else {
-                    // The backend returned an unsuccessful response code.
-                    // The response body may contain clues as to what went wrong.
-                    if (error.status === 0) {
-                        msg = `Internet connection not found!`;
-                    } else if (error.status === 400) {
-                        msg = error.error.error.message;
-                    } else if (error.status === 404) {
-                        msg = error.error.error.message;
-                    } else {
-                        msg = `${error.status}:${error.statusText}`;
-                        if (error.error.error) {
-                            msg = `${msg} => ${error.error.error.code}:${error.error.error.message}`;
-                        }
-                    }
-                }
-                console.error(`DashboardComponent.onSubmitDeposit: msg => ${msg}`);
-                this.snackbarService.open(msg);
+                this.snackbarService.open(error.message);
+            },
+            complete: () => {
             }
         });
+
+
+        // this.isDepositing = true;
+        // this.bankService.deposit(this.depositAmount?.value).pipe(finalize(() => this.isDepositing = false))
+        // .subscribe({
+        //     next: (account: Account) => {
+        //         this.balance = account.balance;
+        //         this.depositAmount?.reset('');
+        //         this.getTransactions();
+        //     },
+        // });
     }
 
     onSubmitWithdraw() {
-        this.isWithdrawing = true;
-        this.bankService.withdraw(this.withdrawAmount?.value).pipe(finalize(() => this.isWithdrawing = false))
+        this.bankService.withdraw(this.withdrawAmount?.value)
         .subscribe({
-            next: (account: Account) => {
-                this.balance = account.balance;
-                this.withdrawAmount?.reset('');
-                this.getTransactions();
+            next: (result: any) => {
+                this.isWithdrawing = result.loading;
             },
             error: (error: any) => {
                 console.error(`DashboardComponent.onSubmitWithdraw: error => ${JSON.stringify(error)}`);
-                let msg: string = "Something went wrong; please try again later.";
-                if (error.error instanceof ErrorEvent) {
-                    // A client-side or network error occurred. Handle it accordingly.
-                    msg = error.error.message;
-                } else {
-                    // The backend returned an unsuccessful response code.
-                    // The response body may contain clues as to what went wrong.
-                    if (error.status === 0) {
-                        msg = `Internet connection not found!`;
-                    } else if (error.status === 400) {
-                        msg = error.error.error.message;
-                    } else if (error.status === 404) {
-                        msg = error.error.error.message;
-                    } else {
-                        msg = `${error.status}:${error.statusText}`;
-                        if (error.error.error) {
-                            msg = `${msg} => ${error.error.error.code}:${error.error.error.message}`;
-                        }
-                    }
-                }
-                console.error(`DashboardComponent.onSubmitWithdraw: msg => ${msg}`);
-                this.snackbarService.open(msg);
+                this.snackbarService.open(error.message);
+            },
+            complete: () => {
             }
         });
+
+
+        // this.isWithdrawing = true;
+        // this.bankService.withdraw(this.withdrawAmount?.value).pipe(finalize(() => this.isWithdrawing = false))
+        // .subscribe({
+        //     next: (account: Account) => {
+        //         this.balance = account.balance;
+        //         this.withdrawAmount?.reset('');
+        //         this.getTransactions();
+        //     },
+        // });
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, Observer, Subject, throwError } from 'rxjs';
 import { map, catchError, retry } from 'rxjs/operators';
@@ -43,7 +43,6 @@ export class AuthService {
     redirectUrl: string = '';
 
     constructor(
-        private http: HttpClient,
         private token: TokenService,
         private apollo: Apollo,
     ) { }
@@ -74,8 +73,8 @@ export class AuthService {
         });
     }
 
-    login(phone : string, password : string) : Observable <User> {
-        return new Observable<User>((observer: Observer<User>) => {
+    login(phone : string, password : string) : Observable <any> {
+        return new Observable<any>((observer: Observer<any>) => {
             this.apollo.mutate({
                 mutation: LOGIN_USER,
                 variables: {
