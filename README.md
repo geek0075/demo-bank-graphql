@@ -1,6 +1,6 @@
 ## Kayode Taiwo
 
-## Fictitious Banking Application with Angular and GraphQL
+## Fictitious Banking Application with Angular and GraphQL API
 
 Fictitious Banking Application with Angular and GraphQL. This application was generated with the Angular CLI and is an Angular (www.angular.io) and GraphQL application that has been deployed to the following url on Heroku:
 
