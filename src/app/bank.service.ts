@@ -79,13 +79,6 @@ export class BankService {
                 }
             }).subscribe({
                 next: (result: any) => {
-                    console.error(`BankService.deposit: result => ${JSON.stringify(result)}`);
-                    if (!result.loading && result?.data && result?.data?.depositAccount) {
-                        const account: Account = Account.fromObject(result?.data?.depositAccount);
-                        console.error(`BankService.deposit: account => ${JSON.stringify(account)}`);
-                        const transactions: Transaction[] = result?.data?.depositAccount?.transactions.map((value: any) => Transaction.fromObject(value));
-                        console.error(`BankService.deposit: transactions => ${JSON.stringify(transactions)}`);
-                    }
                     observer.next(result);
                 },
                 error: (error: any) => {
@@ -136,13 +129,6 @@ export class BankService {
                 query: GET_ACCOUNT,
             }).subscribe({
                 next: (result: any) => {
-                    console.error(`BankService.getAccount: result => ${JSON.stringify(result)}`);
-                    if (!result.loading && result?.data && result?.data?.account) {
-                        const account: Account = Account.fromObject(result?.data?.account);
-                        console.error(`BankService.getAccount: account => ${JSON.stringify(account)}`);
-                        const transactions: Transaction[] = result?.data?.account?.transactions.map((value: any) => Transaction.fromObject(value));
-                        console.error(`BankService.getAccount: transactions => ${JSON.stringify(transactions)}`);
-                    }
                     observer.next(result);
                 },
                 error: (error: any) => {
