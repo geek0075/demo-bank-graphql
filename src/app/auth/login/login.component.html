@@ -1,0 +1,30 @@
+<div class="body">
+    <main class="form-signin">
+        <div class="card">
+            <h4 class="card-header text-center">Login</h4>
+            <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <div class="mb-3">
+                        <label for="phoneInput" class="form-label">Phone</label>
+                        <input id="phoneInput" type="text" class="form-control" formControlName="phone" required>
+                        <div *ngIf="phone?.invalid && (phone?.dirty || phone?.touched)" class="ng-alert ng-alert-danger">
+                            <div *ngIf="phone?.errors?.['required']">
+                                Phone is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="passwordInput" class="form-label">Password</label>
+                        <input id="passwordInput" type="password" class="form-control" formControlName="password">
+                    </div>
+                    <div class="mb-3 text-center">
+                        <button [disabled]="loading||!loginForm.valid" type="submit" class="btn btn-primary">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>

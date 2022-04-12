@@ -1,0 +1,53 @@
+<div class="body">
+    <main class="form-signup">
+        <div class="card">
+            <h4 class="card-header text-center">Register</h4>
+            <div class="card-body">
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <div class="mb-3">
+                        <label for="fullNameInput" class="form-label">Fullname</label>
+                        <input id="fullNameInput" type="text" class="form-control" formControlName="fullName" required maxlength="50">
+                        <div *ngIf="fullName?.invalid && (fullName?.dirty || fullName?.touched)" class="ng-alert ng-alert-danger">
+                            <div *ngIf="fullName?.errors?.['required']">
+                                Fullname is required.
+                            </div>
+                            <div *ngIf="fullName?.errors?.['maxlength']">
+                                Fullname must be less than 50 characters.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phoneInput" class="form-label">Phone</label>
+                        <input id="phoneInput" type="text" class="form-control" formControlName="phone" required maxlength="15">
+                        <div *ngIf="phone?.invalid && (phone?.dirty || phone?.touched)" class="ng-alert ng-alert-danger">
+                            <div *ngIf="phone?.errors?.['required']">
+                                Phone is required.
+                            </div>
+                            <div *ngIf="phone?.errors?.['maxlength']">
+                                Phone must be less than 15 characters.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="passwordInput" class="form-label">Password</label>
+                        <input id="passwordInput" type="password" class="form-control" formControlName="password" required maxlength="50">
+                        <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="ng-alert ng-alert-danger">
+                            <div *ngIf="password?.errors?.['required']">
+                                Password is required.
+                            </div>
+                            <div *ngIf="password?.errors?.['maxlength']">
+                                Password must be less than 50 characters.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <button [disabled]="loading||!registerForm.valid" type="submit" class="btn btn-primary">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Register
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>

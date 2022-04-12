@@ -1,92 +1,62 @@
-# Veegil Bank GraphQL
+## Kayode Taiwo
 
-Veegil Media Full Stack Assessment Front End Application in Angular and GraphQL.
+Fictitious Banking Application. This application was generated with the Angular CLI and is an Angular (www.angular.io) application that has been deployed to the following url on Heroku:
 
-## Getting started
+https://vm-bank.herokuapp.com/
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## User accounts
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+phone:0822340967, password:tunde
 
-## Add your files
+phone:0763339012, password:kayode
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+phone:0967120276, password:gbenga
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/geek0075/veegil-bank-graphql.git
-git branch -M main
-git push -uf origin main
-```
+phone:0345230456, password:theophilus
 
-## Integrate with your tools
+Or create new accounts on the web site.
 
-- [ ] [Set up project integrations](https://gitlab.com/geek0075/veegil-bank-graphql/-/settings/integrations)
+## How to run the App on Heroku
 
-## Collaborate with your team
+01. Navigate to https://vm-bank.herokuapp.com/
+02. You will be automatically redirected to https://vm-bank.herokuapp.com/home
+03. On the top menu bar click on Login / Register
+04. You will be redirected to the Login (https://vm-bank.herokuapp.com/login) or Register (https://vm-bank.herokuapp.com/register) page.
+05. To Register a new user fill the form on the Register page and click Register button.
+06. To Login fill the form on the Login page with your username (phone) and password.
+07. For example Login with these credentials: phone:0763339012, password:kayode.
+08. On thw top menu bar click on Dashboard.
+09. You will be redirected to your Dashboard: https://vm-bank.herokuapp.com/dashboard
+10. Here you see your balance and history of transactions in descending order by date.
+11. You can use the UI for deposit and withdraw to make deposits and withdrawals.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## How to run the App locally from Source
 
-## Test and Deploy
+01. Clone the app to a folder on your local computer, say vm-bank.
+02. Navigate to the local folder by running, $ cd vm-bank.
+03. Run the following command, $ npm install.
+04. Run the following command, $ npm run build.
+05. Run the following command, $ npm run start.
+06. You can now open http://localhost:3000 on your browser. The port to use will be displayed from previous step results.
+07. Proceed as described above in 'How to run the App on Heroku'.
 
-Use the built-in continuous integration in GitLab.
+## Application backend dependency
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+This application depends on a NestJS API that is hosted on Heroku at the following url address:
 
-***
+https://vm-bank-api.herokuapp.com/
 
-# Editing this README
+And is described by Swagger here:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+https://vm-bank-api.herokuapp.com/api/
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+So you need to make sure that the back end API is running in order to run the front end application. The back end API source code is available on gitlab at:
 
-## Name
-Choose a self-explaining name for your project.
+https://gitlab.com/geek0075/veegil-bank-api
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## Stay in touch
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Kayode Taiwo - kay_taylor@outlook.com.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Please send your comments and questions to me at the email above. Thank you and God bless.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
