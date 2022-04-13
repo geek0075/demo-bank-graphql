@@ -84,6 +84,7 @@ export class DashboardComponent implements OnInit {
                 this.snackbarService.open(error.message);
             },
             complete: () => {
+                this.depositAmount?.reset('');
             }
         });
     }
@@ -105,6 +106,7 @@ export class DashboardComponent implements OnInit {
                 this.snackbarService.open(error.message);
             },
             complete: () => {
+                this.withdrawAmount?.reset('');
             }
         });
     }
