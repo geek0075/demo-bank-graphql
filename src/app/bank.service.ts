@@ -118,6 +118,7 @@ export class BankService {
         return new Observable<any>((observer: Observer<any>) => {
             this.apollo.query({
                 query: GET_ACCOUNT,
+                fetchPolicy: 'network-only',
             }).subscribe({
                 next: (result: any) => {
                     observer.next(result);
