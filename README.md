@@ -12,6 +12,8 @@ phone:0712340987, password:kayode
 
 phone:0123211111, password:theophilus
 
+phone:0987654321, password:korede
+
 Or create new accounts on the web site.
 
 ## How to run the App on Heroku
